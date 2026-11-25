@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Treino para a prova dissertativa: Dinâmica dos Sistemas Produtivos</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #F5F1E8; --card: #FFFDF8; --ink: #1E2230; --muted: #4F5361; --rule: #D9D3C4;
+  --ok: #17612F; --ok-bg: #E2F3E7; --ok-line: #2E9A55;
+  --warn: #8A5300; --warn-bg: #FFF1D6; --warn-line: #D99A1E;
+  --bad: #9E2323; --bad-bg: #FBE3E0; --bad-line: #D14B45;
+  --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 110px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+[hidden] { display: none !important; }
+
+.hero { padding: 40px 0 8px; }
+.eyebrow { margin: 0 0 8px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 0 0 10px; font-family: var(--display); font-size: clamp(30px, 6vw, 46px); line-height: 1.1; font-weight: 800; }
+.lead { margin: 0 0 18px; color: var(--muted); font-size: 18px; }
+
+details.method { margin: 0 0 20px; background: var(--card); border: 2px solid var(--rule); border-radius: 16px; padding: 4px 18px; }
+details.method > summary { cursor: pointer; font-weight: 700; padding: 12px 0; min-height: 44px; }
+details.method h2 { font-family: var(--display); font-size: 20px; margin: 14px 0 6px; }
+details.method ol { margin: 0 0 8px; padding-left: 22px; }
+details.method li { margin: 4px 0; }
+details.method .kinds { display: grid; gap: 8px; margin: 6px 0 12px; padding: 0; list-style: none; }
+details.method .kinds li { margin: 0; padding: 10px 12px; border-radius: 10px; background: #fff; border: 1.5px solid var(--rule); font-size: 16px; }
+details.method .kinds b { display: inline-block; min-width: 92px; }
+details.method .note { margin: 4px 0 14px; padding: 10px 12px; border-radius: 10px; background: var(--warn-bg); border: 1.5px solid var(--warn-line); font-size: 16px; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px 8px; align-items: center; margin-bottom: 14px; }
+.controls .label { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-right: 4px; min-width: 44px; }
+.chip { font: inherit; font-size: 15px; font-weight: 600; min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 2px solid var(--rule); background: var(--card); color: var(--ink); cursor: pointer; }
+.chip:hover { border-color: var(--c, var(--ink)); }
+.chip[aria-pressed="true"] { background: var(--c, var(--ink)); border-color: var(--c, var(--ink)); color: #fff; }
+.chip[data-a="e1"] { --c: #0E4786; }
+.chip[data-a="e2"] { --c: #654000; }
+.chip[data-a="e3"] { --c: #7C2524; }
+.chip[data-a="e4"] { --c: #005820; }
+.chip[data-a="e5"] { --c: #5B3177; }
+.chip[data-a="e6"] { --c: #005A5C; }
+.chip[data-a="e7"] { --c: #722756; }
+.chip[data-a="e8"] { --c: #763000; }
+.chip[data-a="e9"] { --c: #3D3C86; }
+.chip[data-a="e10"] { --c: #405000; }
+
+.btn { font: inherit; font-size: 15px; font-weight: 600; min-height: 44px; padding: 8px 16px; border-radius: 12px; border: 2px solid var(--ink); background: var(--card); color: var(--ink); cursor: pointer; }
+.btn:hover:not(:disabled) { background: var(--ink); color: #fff; }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn.primary { background: var(--ink); color: #fff; }
+.btn.primary:hover:not(:disabled) { background: #3a4058; border-color: #3a4058; }
+.btn.danger { border-color: var(--bad); color: var(--bad); }
+.btn.danger:hover:not(:disabled), .btn.danger.armed { background: var(--bad); color: #fff; }
+:focus-visible { outline: 3px solid #2B6CD6; outline-offset: 2px; }
+
+.stats { position: sticky; top: 0; z-index: 5; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 10px 0 12px; margin-top: 10px; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: baseline; font-size: 15px; font-weight: 600; }
+.stats-row .clock { font-family: var(--display); font-size: 26px; font-weight: 800; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.stats-row .clock.low { color: var(--bad); }
+.stats-row .push { margin-left: auto; }
+.bar { margin-top: 8px; height: 10px; border-radius: 999px; background: #E4DECF; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--ok-line); transition: width .3s ease; }
+
+.banner { margin: 18px 0 0; padding: 14px 16px; border-radius: 14px; background: var(--ink); color: #fff; font-size: 16px; }
+.banner strong { font-family: var(--display); font-size: 20px; }
+.banner .btn { margin-top: 10px; border-color: #fff; background: transparent; color: #fff; }
+.banner .btn:hover { background: #fff; color: var(--ink); }
+.banner .btn.primary { background: #fff; color: var(--ink); }
+.banner .row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.group { margin: 34px 0 6px; font-family: var(--display); font-size: 26px; font-weight: 800; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 12px; }
+.group span { font-family: var(--body); font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.q { --c: var(--ink); --t: #E9E4D6; margin: 14px 0; padding: 22px 22px 20px; background: var(--card); border: 2px solid var(--rule); border-left: 8px solid var(--c); border-radius: 18px; }
+.q[data-e="e1"] { --c: #0E4786; --t: #DCEDFF; }
+.q[data-e="e2"] { --c: #654000; --t: #F6EAD1; }
+.q[data-e="e3"] { --c: #7C2524; --t: #FFE3DF; }
+.q[data-e="e4"] { --c: #005820; --t: #DCF2DF; }
+.q[data-e="e5"] { --c: #5B3177; --t: #F2E5FD; }
+.q[data-e="e6"] { --c: #005A5C; --t: #D1F3F2; }
+.q[data-e="e7"] { --c: #722756; --t: #FEE2F1; }
+.q[data-e="e8"] { --c: #763000; --t: #FFE6D6; }
+.q[data-e="e9"] { --c: #3D3C86; --t: #E6E9FF; }
+.q[data-e="e10"] { --c: #405000; --t: #E8EFD5; }
+
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
+.num { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 8px; border-radius: 15px; background: var(--c); color: #fff; font-size: 14px; font-weight: 700; }
+.tag { font-size: 13px; font-weight: 700; letter-spacing: .04em; padding: 4px 10px; border-radius: 999px; background: var(--t); color: var(--c); }
+.kind { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; border: 1.5px solid var(--c); color: var(--c); }
+.sug { font-size: 13px; font-weight: 600; color: var(--muted); }
+.status { margin-left: auto; font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: #EDE8DA; color: var(--muted); }
+.status.draft { background: var(--warn-bg); color: var(--warn); }
+.status.done { background: var(--ok-bg); color: var(--ok); }
+.stmt { margin: 0 0 14px; font-size: 19px; line-height: 1.5; font-weight: 500; }
+
+details.help { margin: 0 0 14px; border: 1.5px dashed var(--muted); border-radius: 12px; padding: 2px 14px; background: #fff; }
+details.help > summary { cursor: pointer; font-weight: 600; font-size: 15px; padding: 10px 0; min-height: 44px; display: flex; align-items: center; }
+details.help p { margin: 0 0 10px; font-size: 16px; }
+
+textarea.resp { display: block; width: 100%; min-height: 210px; resize: vertical; font: inherit; font-size: 17px; line-height: 1.6; padding: 14px 16px; border: 2px solid var(--rule); border-radius: 12px; background: #fff; color: var(--ink); }
+textarea.resp:focus { border-color: var(--c); outline: 3px solid color-mix(in srgb, var(--c) 30%, transparent); outline-offset: 0; }
+textarea.resp[readonly] { background: #F4F1E8; }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 10px; }
+.count { font-size: 14px; font-weight: 600; color: var(--muted); }
+.count.ok { color: var(--ok); }
+.count.long { color: var(--warn); }
+.tools .spacer { flex: 1 1 auto; }
+.tm { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--muted); }
+.tm.over { color: var(--warn); }
+.nudge { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--warn-bg); border: 1.5px solid var(--warn-line); font-size: 16px; }
+
+.gab { margin-top: 18px; padding: 16px 18px 18px; border-radius: 14px; background: #fff; border: 2px solid var(--rule); }
+.gab h3 { margin: 0 0 4px; font-family: var(--display); font-size: 20px; }
+.gab .hint { margin: 0 0 10px; color: var(--muted); font-size: 15.5px; }
+.pts { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 6px; }
+.pts label { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border-radius: 10px; border: 1.5px solid var(--rule); cursor: pointer; font-size: 16.5px; min-height: 44px; }
+.pts label.on { background: var(--ok-bg); border-color: var(--ok-line); }
+.pts input { width: 22px; height: 22px; margin-top: 2px; flex: none; accent-color: var(--ok); }
+.score { margin: 0 0 14px; padding: 10px 12px; border-radius: 10px; font-weight: 600; background: #EDE8DA; }
+.score.good { background: var(--ok-bg); color: var(--ok); }
+.score.mid { background: var(--warn-bg); color: var(--warn); }
+.score.low { background: var(--bad-bg); color: var(--bad); }
+.care { margin: 0 0 14px; padding: 10px 12px; border-radius: 10px; background: var(--warn-bg); border: 1.5px solid var(--warn-line); font-size: 16px; }
+.model { padding: 14px 16px; border-radius: 12px; background: var(--paper); border-left: 6px solid var(--c); }
+.model h4 { margin: 0 0 6px; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.model p { margin: 0 0 8px; font-size: 17px; }
+.model .small { margin: 0; font-size: 13.5px; color: var(--muted); }
+
+.foot { padding: 30px 0 50px; text-align: center; color: var(--muted); font-size: 14px; }
+.final { margin: 30px 0 10px; padding: 18px; border-radius: 16px; background: var(--ink); color: #fff; }
+.final h2 { margin: 0 0 6px; font-family: var(--display); font-size: 26px; }
+
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .q { padding: 18px 14px 16px; border-left-width: 6px; }
+  .stmt { font-size: 18px; }
+  .status { margin-left: 0; }
+  .stats-row .push { margin-left: 0; }
+  textarea.resp { min-height: 190px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Dinâmica dos Sistemas Produtivos · PPGDRS/UEMS · Prova dissertativa</p>
+    <h1>Treino para a prova dissertativa</h1>
+    <p class="lead">20 questões novas, 2 por eixo do guia aprofundado. Escreva a sua resposta, depois confira o gabarito: marque os pontos que você cobriu e compare com a resposta-modelo. Suas respostas ficam salvas neste navegador.</p>
+
+    <details class="method">
+      <summary>Como montar uma boa resposta (leia uma vez, vale o treino todo)</summary>
+      <h2>Roteiro de cinco passos</h2>
+      <ol>
+        <li><strong>Leia o comando.</strong> O verbo da questão diz o que cobrar de você (veja abaixo).</li>
+        <li><strong>Abra com a tese.</strong> Uma frase que já responde à pergunta.</li>
+        <li><strong>Defina e cite o autor.</strong> Conceito com as suas palavras e o nome de quem o propõe.</li>
+        <li><strong>Mostre a distinção, o limite ou o exemplo.</strong> É aqui que a resposta passa de “decorada” a “entendida”.</li>
+        <li><strong>Feche com um argumento.</strong> Uma frase de conclusão ligada à pergunta, e não um resumo.</li>
+      </ol>
+      <h2>O que cada comando pede</h2>
+      <ul class="kinds" id="kinds"></ul>
+      <p class="note"><strong>Para o dia da prova (guia, seção 14):</strong> distribua o tempo conforme o número e o peso das questões; reserve os minutos finais para conferir se respondeu a todos os comandos, citou autores pertinentes e concluiu com argumento; evite citações literais e números que você não consegue recordar com segurança.</p>
+      <p class="note"><strong>Meta de tamanho:</strong> 8 a 12 linhas por resposta, cerca de 110 a 200 palavras. É o ritmo que cabe numa prova de duas horas.</p>
+    </details>
+
+    <div id="filters">
+      <div class="controls" role="group" aria-label="Filtrar por eixo">
+        <span class="label">Eixo</span>
+        <button type="button" class="chip" data-kind="eixo" data-filter="all" aria-pressed="true">Todos</button>
+        <button type="button" class="chip" data-a="e1" data-kind="eixo" data-filter="e1" aria-pressed="false" title="Teoria dos sistemas">1 · Sistemas</button>
+        <button type="button" class="chip" data-a="e2" data-kind="eixo" data-filter="e2" aria-pressed="false" title="Evolução e classificação">2 · Evolução</button>
+        <button type="button" class="chip" data-a="e3" data-kind="eixo" data-filter="e3" aria-pressed="false" title="Taylor, Ford e reestruturação">3 · Taylor e Ford</button>
+        <button type="button" class="chip" data-a="e4" data-kind="eixo" data-filter="e4" aria-pressed="false" title="Toyotismo e produção enxuta">4 · Toyotismo</button>
+        <button type="button" class="chip" data-a="e5" data-kind="eixo" data-filter="e5" aria-pressed="false" title="Organização, cultura e equipes">5 · Organização</button>
+        <button type="button" class="chip" data-a="e6" data-kind="eixo" data-filter="e6" aria-pressed="false" title="Lean na prática: dois estudos">6 · Lean na prática</button>
+        <button type="button" class="chip" data-a="e7" data-kind="eixo" data-filter="e7" aria-pressed="false" title="Redes, confiança e aprendizagem">7 · Redes</button>
+        <button type="button" class="chip" data-a="e8" data-kind="eixo" data-filter="e8" aria-pressed="false" title="Clusters e densidade institucional">8 · Clusters</button>
+        <button type="button" class="chip" data-a="e9" data-kind="eixo" data-filter="e9" aria-pressed="false" title="Cadeias de valor e upgrading">9 · Cadeias de valor</button>
+        <button type="button" class="chip" data-a="e10" data-kind="eixo" data-filter="e10" aria-pressed="false" title="Sistemas de inovação: a síntese">10 · Inovação</button>
+        
+      </div>
+      <div class="controls" role="group" aria-label="Filtrar por tipo de comando">
+        <span class="label">Tipo</span>
+        <button type="button" class="chip" data-kind="tipo" data-filter="all" aria-pressed="true">Todos</button>
+        <button type="button" class="chip" data-kind="tipo" data-filter="Explique" aria-pressed="false">Explique</button>
+        <button type="button" class="chip" data-kind="tipo" data-filter="Diferencie" aria-pressed="false">Diferencie</button>
+        <button type="button" class="chip" data-kind="tipo" data-filter="Discuta" aria-pressed="false">Discuta</button>
+        <button type="button" class="chip" data-kind="tipo" data-filter="Aplique" aria-pressed="false">Aplique</button>
+        <button type="button" class="chip" data-kind="tipo" data-filter="Relacione" aria-pressed="false">Relacione</button>
+        
+      </div>
+    </div>
+    <div class="controls">
+      <button type="button" class="btn primary" id="btn-exam">Simulado de 2 horas (4 questões)</button>
+      <button type="button" class="btn" id="btn-export">Baixar minhas respostas (.txt)</button>
+      <button type="button" class="btn danger" id="btn-clear">Apagar minhas respostas</button>
+    </div>
+    <p class="count" id="save-note" hidden>Este navegador não permite salvar automaticamente. Use “Baixar minhas respostas” antes de fechar a página.</p>
+  </div>
+</header>
+
+<div class="stats" aria-label="Seu progresso">
+  <div class="wrap">
+    <div class="stats-row" id="stats-row"></div>
+    <div class="bar" role="progressbar" aria-label="Questões corrigidas" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="bar"><i id="bar-fill" style="width:0%"></i></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div id="modebar"></div>
+  <div id="list"></div>
+  <div id="final"></div>
+  <p class="foot">Baseado no guia aprofundado de estudo de Dinâmica dos Sistemas Produtivos. As respostas-modelo são sínteses autorais de estudo, e não citações literais.</p>
+</main>
+
+<script>
+(function () {
+  var EIXOS = {
+ "1": [
+  "Teoria dos sistemas",
+  "Sistemas"
+ ],
+ "2": [
+  "Evolução e classificação",
+  "Evolução"
+ ],
+ "3": [
+  "Taylor, Ford e reestruturação",
+  "Taylor e Ford"
+ ],
+ "4": [
+  "Toyotismo e produção enxuta",
+  "Toyotismo"
+ ],
+ "5": [
+  "Organização, cultura e equipes",
+  "Organização"
+ ],
+ "6": [
+  "Lean na prática: dois estudos",
+  "Lean na prática"
+ ],
+ "7": [
+  "Redes, confiança e aprendizagem",
+  "Redes"
+ ],
+ "8": [
+  "Clusters e densidade institucional",
+  "Clusters"
+ ],
+ "9": [
+  "Cadeias de valor e upgrading",
+  "Cadeias de valor"
+ ],
+ "10": [
+  "Sistemas de inovação: a síntese",
+  "Inovação"
+ ]
+};
+  var TIPOS = {
+ "Explique": "Defina o conceito, mostre como ele funciona (o mecanismo, e não só o nome) e feche com uma consequência ou um exemplo.",
+ "Diferencie": "Compare ponto a ponto, com ao menos dois critérios. Definir cada termo separadamente não basta: mostre onde está a diferença e qual confusão ela evita.",
+ "Discuta": "Assuma uma posição (ou diga de que ela depende), apresente argumentos dos dois lados, mobilize autores e feche com uma conclusão. Evite o “depende” solto.",
+ "Aplique": "Traga o conceito para o caso: nomeie os elementos do caso com os termos da teoria e tire uma conclusão prática. Dados de casos construídos servem só como exemplo.",
+ "Relacione": "Mostre a lógica da ligação entre autores ou conceitos: um explica o quê, o outro explica como ou por quê. Não liste os autores lado a lado."
+};
+  var Q = [
+ {
+  "eixo": 1,
+  "tipo": "Diferencie",
+  "min": 15,
+  "q": "Diferencie sistema fechado (mecânico) de sistema aberto (orgânico) e explique por que as organizações reais são consideradas abertas. Inclua o conceito de entropia.",
+  "autores": [
+   "Araújo (2009)",
+   "Morgan (2002)",
+   "Bertalanffy"
+  ],
+  "pontos": [
+   "Fechado/mecânico: relativamente previsível e pouco sensível ao ambiente",
+   "Aberto/orgânico: depende de trocas com o meio, de pessoas e de condições mutáveis",
+   "Organizações reais são abertas (compatível com a contingência de Morgan)",
+   "Entropia: tendência à desorganização",
+   "A entropia é enfrentada com informação, aprendizagem e recursos",
+   "Conclusão: analisar o conjunto e o ambiente, e não setores isolados"
+  ],
+  "cuidado": "Sistema aberto ≠ sistema de inovação. A teoria dos sistemas é uma lente geral; o sistema de inovação é outro conceito (eixo 10).",
+  "modelo": "O sistema fechado, de lógica mecânica, é relativamente previsível e pouco sensível ao ambiente: as partes operam segundo regras e o entorno interfere pouco. O sistema aberto, de lógica orgânica, depende de trocas contínuas com o meio, de pessoas e de condições que mudam. As organizações reais são abertas: recebem recursos, informação e pressões do ambiente e devolvem bens, serviços e resíduos. Isso é compatível com a leitura de contingência de Morgan, para quem a estrutura adequada depende de ambiente, tecnologia e tarefas. Nesse quadro, a entropia é a tendência à desorganização, enfrentada com informação, aprendizagem e recursos. Por isso, diagnósticos que olham apenas um setor falham: é preciso considerar o conjunto e o ambiente em que ele opera."
+ },
+ {
+  "eixo": 1,
+  "tipo": "Diferencie",
+  "min": 12,
+  "q": "Diferencie eficiência, eficácia, produtividade e competitividade. Dê um exemplo (construído) de uma unidade que é eficiente, mas não é eficaz.",
+  "autores": [
+   "Araújo (2009)"
+  ],
+  "pontos": [
+   "Eficiência: usar bem os recursos",
+   "Eficácia: alcançar os objetivos",
+   "Produtividade: relação produto ÷ insumo",
+   "Competitividade: sustentar desempenho relativo",
+   "Exemplo coerente: uso bom de recursos sem cumprir o objetivo do sistema",
+   "Conclusão: avaliar o desempenho global, e não só indicadores locais"
+  ],
+  "cuidado": "Os quatro termos costumam ser tratados como sinônimos. Dê a definição de cada um em uma frase e o critério que os separa. O exemplo é seu: não o atribua a um autor.",
+  "modelo": "Eficiência é usar bem os recursos, ou seja, produzir sem desperdiçar entradas. Eficácia é alcançar os objetivos propostos. Produtividade é a relação entre o produto e os insumos empregados, e competitividade é a capacidade de sustentar desempenho relativo frente aos concorrentes. Os conceitos não se confundem: uma unidade pode ser eficiente sem ser eficaz. Por exemplo, uma etapa que fabrica com pouco desperdício peças que a etapa seguinte não consegue usar, ou que o cliente não pediu, usa bem os recursos, mas não cumpre o objetivo do sistema. Da mesma forma, produtividade alta em uma etapa não garante bom resultado global. Por isso, a gestão operacional deve avaliar o desempenho do conjunto, e não apenas indicadores locais."
+ },
+ {
+  "eixo": 2,
+  "tipo": "Discuta",
+  "min": 18,
+  "q": "“A produção flexível substituiu a produção em massa, que por sua vez havia substituído a artesanal.” Discuta essa afirmação.",
+  "autores": [
+   "Araújo (2009)",
+   "Pinto (2007)"
+  ],
+  "pontos": [
+   "A evolução não é substituição linear e universal",
+   "Artesanal, de massa e flexível coexistem",
+   "O que predomina depende de produto, demanda, tecnologia, trabalho e território",
+   "Massa: economia de escala, mas rigidez e estoques",
+   "Flexível: lotes menores, células e polivalência, com mais coordenação",
+   "Conclusão: mudanças ligam-se a poder, divisão do trabalho e relações entre firmas"
+  ],
+  "cuidado": "O guia insiste na coexistência dos modelos. Evite narrar a evolução como uma sequência em que um modelo apaga o anterior.",
+  "modelo": "A afirmação é parcialmente enganosa porque trata a evolução como substituição linear e universal. Os sistemas artesanais, de massa e flexíveis coexistem, e o que predomina depende do tipo de produto, da demanda, da tecnologia, do trabalho disponível e do território. O artesanal personaliza o produto, mas tem menor escala. A produção em massa, com linhas e grandes lotes, obtém economia de escala, mas à custa de rigidez e estoques. A produção flexível trabalha com lotes menores, células e polivalência, e por isso exige mais coordenação. Cada modelo responde, portanto, a condições distintas. Além disso, a passagem de um modelo a outro envolve poder, divisão do trabalho e relações entre firmas, e não apenas técnica. Conclui-se que há reorganizações e combinações, e não uma sucessão em que um modelo elimina o anterior."
+ },
+ {
+  "eixo": 2,
+  "tipo": "Explique",
+  "min": 15,
+  "q": "Explique a classificação operacional dos sistemas produtivos (por projeto, por lotes, repetitiva e contínua) e mostre por que “manufatura × serviços” e “puxar × empurrar” são critérios de outra natureza.",
+  "autores": [
+   "Araújo (2009)",
+   "Pinto (2007)"
+  ],
+  "pontos": [
+   "Projeto/encomenda: produto singular, alta customização",
+   "Lotes: volume e variedade intermediários",
+   "Repetitiva/em linha: alto volume e baixa variedade relativa",
+   "Contínua: fluxo pouco interrompido (ex.: refino)",
+   "Manufatura × serviços é outro critério (nos serviços, o cliente participa e produção e consumo são simultâneos)",
+   "Puxar × empurrar é lógica de programação, e não tipo de sistema"
+  ],
+  "cuidado": "A classificação operacional é uma síntese didática do guia para cobrir a ementa. Use-a para organizar o raciocínio, e não como citação de um autor.",
+  "modelo": "A classificação operacional organiza os sistemas segundo volume e variedade. Na produção por projeto ou encomenda, o produto é singular e muito customizado. Na produção por lotes, volume e variedade são intermediários. Na produção repetitiva, ou em linha, o volume é alto e a variedade relativa é baixa. Na produção contínua, o fluxo é pouco interrompido, como no refino. Outros critérios têm natureza diferente: a distinção entre manufatura e serviços olha para o tipo de saída, e nos serviços o cliente participa, produção e consumo são simultâneos e estocar é difícil. Já puxar ou empurrar não classifica o sistema, e sim a lógica de programação: a produção puxada responde à necessidade a jusante, enquanto a empurrada se antecipa por plano ou previsão. Os critérios respondem a perguntas diferentes sobre o mesmo sistema, e misturá-los gera confusão."
+ },
+ {
+  "eixo": 3,
+  "tipo": "Discuta",
+  "min": 20,
+  "q": "O fordismo pagava salários elevados. Isso significa que o trabalhador saiu ganhando? Argumente com base em Pinto.",
+  "autores": [
+   "Pinto (2007)"
+  ],
+  "pontos": [
+   "Fordismo = taylorismo + peças intercambiáveis + linha móvel",
+   "Ritmo imposto pelo fluxo; alto volume e padronização",
+   "Ganho por escala, integração vertical e consumo de massa",
+   "Salário elevado e política disciplinar estabilizavam a mão de obra: não era emancipação",
+   "Pinto: organização do trabalho é histórica e atravessada pela relação capital-trabalho",
+   "Conclusão equilibrada: ganhos materiais convivem com controle e ritmo imposto"
+  ],
+  "cuidado": "Evite os dois extremos: “fordismo foi só exploração” ou “foi progresso para todos”. A resposta forte reconhece escala e consumo e mostra a lógica de controle.",
+  "modelo": "O fordismo combinou os princípios tayloristas com peças intercambiáveis e linha móvel, impondo ao trabalhador o ritmo do fluxo, em um sistema de alto volume, padronização, integração vertical e consumo de massa. Os salários elevados existiram, mas, segundo Pinto, juntamente com uma política disciplinar, serviam para estabilizar a mão de obra, e não para emancipá-la. A organização do trabalho, nessa leitura, é histórica e atravessada pela relação capital-trabalho, e não uma sequência neutra de técnicas superiores. Assim, o trabalhador pôde participar do consumo de massa, mas ao custo de um ritmo imposto e da separação entre concepção e execução, herdada de Taylor. A conclusão é que o ganho existe, mas é inseparável de novas formas de controle."
+ },
+ {
+  "eixo": 3,
+  "tipo": "Explique",
+  "min": 18,
+  "q": "Por que a crise dos anos 1970 expôs os limites do sistema de produção em massa e que respostas surgiram? Discuta os efeitos sociais ambíguos da flexibilização.",
+  "autores": [
+   "Pinto (2007)",
+   "Araújo (2009)"
+  ],
+  "pontos": [
+   "Desaceleração, mercados disputados e diversificados, choques do petróleo e conflitos trabalhistas",
+   "Limites da rigidez do sistema de massa",
+   "Respostas: automação, microeletrônica, organização flexível e terceirização",
+   "Sem causa única: responder a mercados incertos e reduzir custos e capital imobilizado",
+   "Flexibilizar pode ser inovação e capacidade de resposta",
+   "Mas pode transferir riscos, intensificar o ritmo e subcontratar (núcleo estável × periferia)"
+  ],
+  "cuidado": "Não atribua a crise a uma causa única (por exemplo, apenas ao petróleo).",
+  "modelo": "Nos anos 1970, a desaceleração do crescimento, os mercados disputados e mais diversificados, os choques do petróleo e os conflitos trabalhistas evidenciaram a rigidez do sistema de massa, pensado para volumes altos de produtos padronizados. Não houve causa única: as empresas buscavam responder a mercados incertos e reduzir custos e capital imobilizado. As respostas incluíram automação, microeletrônica, organização flexível e terceirização. Os efeitos sociais são ambíguos. A flexibilização pode significar inovação e maior capacidade de resposta, mas também transferência de riscos, intensificação do ritmo e subcontratação, com segmentação entre um núcleo estável e trabalhadores periféricos. Equipes e polivalência mobilizam saberes sem eliminar o controle empresarial. Portanto, avaliar a reestruturação exige olhar tanto para a eficiência quanto para a distribuição de seus custos e benefícios."
+ },
+ {
+  "eixo": 4,
+  "tipo": "Diferencie",
+  "min": 15,
+  "q": "Diferencie JIT, kanban e jidoka e explique por que um estoque baixo tanto expõe problemas quanto aumenta a vulnerabilidade da produção.",
+  "autores": [
+   "Pinto (2007)",
+   "Araújo (2009)",
+   "Saurin et al. (2010)"
+  ],
+  "pontos": [
+   "JIT: produzir e abastecer na quantidade, momento e local necessários",
+   "Jidoka (autonomação): detectar anomalia, parar e corrigir a causa",
+   "Kanban: sinal/autorização de reposição; não é o próprio JIT",
+   "Poka-yoke e andon (prevenção de erro e sinalização visual) não são jidoka",
+   "Estoque baixo expõe problemas de qualidade e de abastecimento",
+   "JIT exige qualidade na fonte e fornecedores confiáveis; estoque baixo aumenta a vulnerabilidade a rupturas"
+  ],
+  "cuidado": "“JIT ≠ kanban” e “jidoka ≠ poka-yoke” estão na lista de confusões do guia. Evite também reduzir o lean a “cortar estoques”.",
+  "modelo": "Just in time é produzir e abastecer na quantidade, no momento e no local necessários. Jidoka, ou autonomação, é detectar uma anomalia, interromper o processo e corrigir a causa, incorporando qualidade à produção. Kanban é um mecanismo de sinalização e autorização de reposição: pode apoiar o JIT, mas não é o próprio JIT. Poka-yoke e andon, de prevenção de erros e sinalização visual, também não se confundem com o jidoka. O estoque baixo expõe problemas porque deixa de mascarar falhas de qualidade e de abastecimento. Por outro lado, o JIT exige qualidade na fonte e fornecedores confiáveis, e, com estoques baixos, rupturas afetam diretamente a produção. Logo, o lean não consiste em cortar estoques, mas em organizar um fluxo de valor com menos desperdício e mais capacidade de resposta."
+ },
+ {
+  "eixo": 4,
+  "tipo": "Aplique",
+  "min": 15,
+  "q": "Uma linha tem três etapas em série, com capacidades de 80, 50 e 70 unidades por hora. Aplique a Teoria das Restrições: qual é o limite do sistema, o que fazer primeiro e o que acontece se a segunda etapa passar a produzir 90 por hora?",
+  "autores": [
+   "Goldratt",
+   "Araújo (2009)",
+   "Pinto (2007)"
+  ],
+  "pontos": [
+   "Limite do sistema: 50 un/h (a 2ª etapa é o gargalo)",
+   "O gargalo limita o desempenho global (Goldratt)",
+   "Passos: identificar, explorar, subordinar os demais recursos, elevar e repetir",
+   "Investir na 1ª etapa não aumenta a saída: só gera estoque e espera",
+   "Com a 2ª etapa a 90, o novo limite é 70 un/h (a 3ª etapa): é o “repetir”",
+   "Cuidado com qualidade, segurança e demanda ao intervir"
+  ],
+  "cuidado": "Os números deste exercício são inventados para treino (o guia usa 100, 60 e 90). Em prova, mostre o raciocínio: em série, manda o menor valor.",
+  "modelo": "Em um sistema em série, a capacidade global é limitada pela etapa mais lenta. Aqui, a segunda etapa, de 50 unidades por hora, é o gargalo e limita todo o fluxo a 50, apesar de as outras terem capacidade maior. Pela Teoria das Restrições, de Goldratt, o caminho é identificar o gargalo, explorá-lo ao máximo, subordinar os demais recursos ao seu ritmo, elevar sua capacidade e repetir o ciclo. Ampliar a primeira etapa não aumentaria a saída; apenas geraria estoque e espera diante do gargalo, o que o lean trata como desperdício. Se a segunda etapa passar a 90, o limite deixa de ser 50 e passa a ser a terceira etapa, de 70 unidades por hora, que se torna a nova restrição. Por isso o ciclo se repete, sempre considerando qualidade, segurança e demanda."
+ },
+ {
+  "eixo": 5,
+  "tipo": "Aplique",
+  "min": 18,
+  "q": "Uma fábrica reorganizou-se em células e padronizou seus procedimentos, mas os resultados foram fracos por causa da resistência dos trabalhadores e de normas informais. Analise o caso com as metáforas de Morgan e com a pesquisa de Sacomano Neto e Escrivão Filho.",
+  "autores": [
+   "Morgan (2002)",
+   "Sacomano Neto e Escrivão Filho (2000)",
+   "Pinto (2007)"
+  ],
+  "pontos": [
+   "Células e adaptação: lógica do organismo",
+   "Procedimentos padronizados: lógica da máquina",
+   "Resistência e normas informais: cultura (valores, crenças, práticas)",
+   "Cada metáfora ilumina certos aspectos e deixa outros na sombra; combiná-las evita determinismo técnico ou cultural",
+   "Sacomano Neto e Escrivão Filho: desenhar a célula não basta (cultura, layout, comunicação, comportamento gerencial)",
+   "Quatro casos: compreensão analítica, e não lei universal"
+  ],
+  "cuidado": "Quatro casos permitem compreensão analítica, e não lei universal. Evite generalizar (“toda célula fracassa sem mudança cultural”).",
+  "modelo": "O caso combina três lentes de Morgan. As células e a busca de adaptação remetem ao organismo, que enfatiza a relação com o ambiente e a flexibilidade. Os procedimentos padronizados remetem à máquina, que valoriza regras e previsibilidade. A resistência e as normas informais são fenômenos culturais: valores, crenças e práticas que dão significado ao trabalho e podem bloquear mudanças formais. Cada metáfora ilumina certos aspectos e deixa outros na sombra, por isso devem ser combinadas, evitando tanto o determinismo técnico quanto explicações apenas culturais. Sacomano Neto e Escrivão Filho, em quatro empresas industriais, mostram que equipes e células ampliam a flexibilidade, mas que desenhar a célula não basta: cultura, layout, comunicação e comportamento gerencial condicionam os resultados. Como são quatro casos, a conclusão é analítica, e não uma lei universal. O fracasso do caso pode ser lido, assim, como ajuste técnico e estrutural sem o trabalho cultural e de comunicação correspondente."
+ },
+ {
+  "eixo": 5,
+  "tipo": "Explique",
+  "min": 15,
+  "q": "Diferencie as Teorias X, Y e Z e explique por que X e Y não descrevem tipos de trabalhadores. Em seguida, discuta, com Pinto, por que a participação não elimina automaticamente as assimetrias.",
+  "autores": [
+   "Araújo (2009)",
+   "McGregor",
+   "Ouchi",
+   "Pinto (2007)"
+  ],
+  "pontos": [
+   "X (McGregor): pressupõe vigilância e controle",
+   "Y: admite autodireção, responsabilidade e participação sob condições adequadas",
+   "São pressupostos gerenciais, e não tipos imutáveis de trabalhadores",
+   "Z (Ouchi): confiança, vínculos de longo prazo, decisão participativa e responsabilidade compartilhada",
+   "Pinto: polivalência e equipes ampliam atribuições, com nova disciplina e cobrança por metas",
+   "Conclusão: participação ≠ fim das assimetrias"
+  ],
+  "cuidado": "“Equipe ≠ autonomia automática” está na lista de confusões do guia. Não trate a Teoria Y ou a Z como o “lado bom” sem discutir condições e poder.",
+  "modelo": "As teorias X e Y, de McGregor, descrevem pressupostos que os gestores fazem sobre as pessoas. A X pressupõe que é preciso vigiar e controlar; a Y admite autodireção, responsabilidade e participação, desde que as condições sejam adequadas. Por isso não são tipos imutáveis de trabalhadores, e sim hipóteses que orientam a gestão. A teoria Z, de Ouchi, enfatiza confiança, vínculos de longo prazo, decisão participativa e responsabilidade compartilhada. Entretanto, a participação não elimina automaticamente as assimetrias. Pinto mostra que a polivalência e o trabalho em equipes ampliam as atribuições, mas vêm acompanhados de nova disciplina e cobrança por metas, de modo que o controle empresarial permanece, em outra forma. Assim, mesmo propostas como a Y ou a Z precisam ser avaliadas pelas condições concretas de poder e de autonomia."
+ },
+ {
+  "eixo": 6,
+  "tipo": "Discuta",
+  "min": 18,
+  "q": "Por que os estudos de Glaser-Segura et al. e de Saurin et al. permitem apontar convergências, mas não provar que a cultura nacional determina o sucesso do lean?",
+  "autores": [
+   "Glaser-Segura et al. (2011)",
+   "Saurin et al. (2010)"
+  ],
+  "pontos": [
+   "Glaser-Segura: aderência percebida de práticas e cultura em três países (survey)",
+   "Limites: autorrelato; acesso por conveniência ou contatos em parte da amostra; diferenças de função; sem estratificação por porte",
+   "Hipóteses histórico-culturais, sem demonstrar causalidade nacional",
+   "Saurin et al.: levantamento exploratório com 47 empresas, amostra de conveniência, sem representatividade estatística pretendida",
+   "Convergência: cultura e integração são decisivas; lean é filosofia sistêmica, não kit de ferramentas",
+   "Conclusão: evidência exploratória orienta hipóteses, mas não demonstra causa"
+  ],
+  "cuidado": "Não crave o total de empresas do survey de Glaser-Segura: o resumo traz 248 e a metodologia soma 227. Escreva “survey em três países” ou cite as duas contagens.",
+  "modelo": "Glaser-Segura et al. realizaram um survey em três países sobre a aderência percebida de práticas e cultura à filosofia enxuta. Os dados são de autorrelato, parte da amostra foi obtida por conveniência ou contatos, há diferenças de função entre respondentes e não houve estratificação por porte. Os autores sugerem hipóteses histórico-culturais, mas não demonstram causalidade nacional. Saurin et al. fizeram um levantamento exploratório em 47 empresas, com questionário e visitas, em amostra de conveniência e sem pretensão de representatividade estatística. Apesar dessas limitações, os dois estudos convergem em um ponto relevante: cultura e integração são decisivas, e o lean é uma filosofia sistêmica, e não um conjunto de ferramentas. Logo, os resultados orientam hipóteses e práticas, mas não permitem afirmar que a cultura de um país, sozinha, determina o sucesso do lean."
+ },
+ {
+  "eixo": 6,
+  "tipo": "Discuta",
+  "min": 18,
+  "q": "“Lean significa produzir mais com menos gente.” Avalie essa afirmação, considerando sobrecarga, saúde e distribuição dos ganhos.",
+  "autores": [
+   "Pinto (2007)",
+   "Saurin et al. (2010)",
+   "Glaser-Segura et al. (2011)"
+  ],
+  "pontos": [
+   "Lean não é cortar pessoas ou estoques: é organizar um fluxo de valor com menos desperdício",
+   "Ohno: reduzir desperdícios e sincronizar operações",
+   "Entre os 3 MU, muri é sobrecarga, algo a eliminar",
+   "Pinto: polivalência e equipes ampliam atribuições, com cobrança por metas; flexibilidade ≠ autonomia plena",
+   "Saurin: oportunidade de integrar segurança, saúde e meio ambiente e analisar condições de trabalho",
+   "Conclusão: eficiência não justifica ignorar saúde, sobrecarga e distribuição dos ganhos"
+  ],
+  "cuidado": "Mostre que a afirmação confunde lean com corte de custos, mas não negue que a intensificação existe: Pinto a registra como risco.",
+  "modelo": "A afirmação reduz o lean a corte de pessoal. O Sistema Toyota de Produção, de Ohno, busca eliminar desperdícios e sincronizar operações; lean não é cortar pessoas ou estoques, mas organizar um fluxo de valor com menos desperdício. Entre os 3 MU, o muri, ou sobrecarga, é justamente um problema a ser eliminado, e não uma forma de ganhar eficiência. Pinto mostra, porém, que polivalência e equipes ampliam atribuições com nova disciplina e cobrança por metas, de modo que flexibilidade empresarial não equivale a autonomia plena. Saurin et al. apontam como oportunidade integrar segurança, saúde e meio ambiente à análise das condições de trabalho. Conclui-se que eficiência não justifica ignorar saúde, sobrecarga e a distribuição dos ganhos: um lean bem entendido combina menos desperdício com boas condições de trabalho e retorno compartilhado."
+ },
+ {
+  "eixo": 7,
+  "tipo": "Aplique",
+  "min": 15,
+  "q": "Duas redes de firmas foram avaliadas: a rede A tem alta confiança e baixa flexibilidade; a rede B tem baixa confiança e alta flexibilidade. Classifique-as na Matriz ConFlex, interprete o resultado e explique o que são os quadrantes.",
+  "autores": [
+   "F. Pinto e Loiola (2007)"
+  ],
+  "pontos": [
+   "Comportamento predominante = confiança × flexibilidade",
+   "Confiança: transparência, honestidade e relacionamento interpessoal",
+   "Flexibilidade: pró-atividade e reconfiguração",
+   "Rede A (alta confiança, baixa flexibilidade): cooperação baixa",
+   "Rede B (baixa confiança, alta flexibilidade): competição baixa",
+   "Quadrantes são tipos ideais, e não categorias rígidas; associação estatística ≠ causa comprovada"
+  ],
+  "cuidado": "Os dois quadrantes do exemplo são os “intermediários”, fáceis de trocar entre si. Cuide: alta confiança + alta flexibilidade = cooperação alta; baixa + baixa = competição alta.",
+  "modelo": "A Matriz ConFlex, de Pinto e Loiola, entende que o comportamento predominante em uma rede resulta da combinação entre confiança, que envolve transparência, honestidade e relacionamento interpessoal, e flexibilidade, que envolve pró-atividade e reconfiguração. A rede A, de alta confiança e baixa flexibilidade, situa-se no quadrante de cooperação baixa: há relações de confiança, mas pouca capacidade de reconfigurar e agir de forma proativa. A rede B, de baixa confiança e alta flexibilidade, situa-se no de competição baixa. Os quatro quadrantes são tipos ideais, e não categorias rígidas de empresas, de modo que as redes reais podem combinar traços de mais de um quadrante. O modelo ajuda a diagnosticar relações e orientar melhorias, sem supor que cooperação e competição sejam excludentes nem tratar as associações estatísticas da pesquisa como causas comprovadas."
+ },
+ {
+  "eixo": 7,
+  "tipo": "Explique",
+  "min": 15,
+  "q": "Defina rede interfirmas, explique por que ela é uma forma de governança híbrida e comente a frase “cooperar para gerar valor não impede competir por sua apropriação”.",
+  "autores": [
+   "F. Pinto e Loiola (2007)",
+   "Teixeira e Guerra (2002)"
+  ],
+  "pontos": [
+   "Empresas juridicamente independentes, com relações continuadas e objetivo produtivo comum",
+   "Governança híbrida: entre mercado e hierarquia (contratos, coordenação, confiança)",
+   "Nós (atores), ligações (relações) e fluxos (materiais, financeiros, informacionais)",
+   "Horizontal (mesma etapa) × vertical (etapas distintas)",
+   "Comentário da frase: cooperar para gerar valor e disputar a sua apropriação coexistem",
+   "Conclusão: rede ≠ cluster; rede de firmas ≠ rede de aprendizado"
+  ],
+  "cuidado": "“Confiança ≠ ausência de competição” e “rede de firmas ≠ rede de aprendizado” estão na lista de confusões do guia.",
+  "modelo": "Rede interfirmas é um conjunto de empresas juridicamente independentes que mantêm relações continuadas em torno de um objetivo produtivo comum. Seus elementos são os nós (atores), as ligações (relações) e os fluxos materiais, financeiros e informacionais; ela pode ser horizontal, quando reúne firmas da mesma etapa, ou vertical, quando liga etapas distintas. A rede é uma governança híbrida porque se situa entre o mercado, de trocas pontuais, e a hierarquia, de comando e propriedade, combinando contratos, coordenação e confiança. Isso explica a frase em questão: as firmas cooperam para gerar valor conjunto, mas permanecem independentes e continuam disputando a parte desse valor que cada uma captura. Por isso, a rede não equivale a cluster, nem toda rede de firmas é uma rede de aprendizado."
+ },
+ {
+  "eixo": 8,
+  "tipo": "Diferencie",
+  "min": 18,
+  "q": "Diferencie aglomeração, cluster, distrito industrial, APL e sistema produtivo e inovativo local, e explique por que essas categorias não são equivalentes.",
+  "autores": [
+   "Marshall",
+   "Gerolamo et al. (2008)",
+   "Fernández (2004)"
+  ],
+  "pontos": [
+   "Aglomeração: concentração espacial de atividades",
+   "Cluster: firmas e instituições relacionadas por complementaridade, especialização e/ou rivalidade",
+   "Distrito industrial (Marshall, Itália): PMEs especializadas, divisão social do trabalho, mão de obra qualificada",
+   "APL: vínculos produtivos e institucionais; sistemas produtivos e inovativos locais: articulações mais densas",
+   "Redes podem existir sem proximidade geográfica",
+   "Não há equivalência conceitual perfeita entre as categorias"
+  ],
+  "cuidado": "Cluster ≠ rede, e estar no mesmo território não prova cooperação. Evite usar os termos como sinônimos.",
+  "modelo": "Aglomeração é a simples concentração espacial de atividades, sem que isso implique relações entre elas. O cluster reúne firmas e instituições relacionadas por complementaridade, especialização ou rivalidade. O distrito industrial, de Marshall e associado à Itália, é formado por pequenas e médias empresas especializadas, com divisão social do trabalho e mão de obra qualificada. O arranjo produtivo local (APL) envolve vínculos produtivos e institucionais, e os sistemas produtivos e inovativos locais indicam articulações ainda mais densas. Essas categorias não são equivalentes: variam a intensidade das relações e o papel das instituições, e não há equivalência conceitual perfeita entre elas. Além disso, redes podem existir sem proximidade geográfica. O essencial é não tratar a presença de firmas no mesmo território como prova de cooperação ou de sistema produtivo."
+ },
+ {
+  "eixo": 8,
+  "tipo": "Discuta",
+  "min": 20,
+  "q": "Avalie a afirmação: “onde há aglomeração de firmas, a cooperação e o desenvolvimento surgem naturalmente”. Use eficiência coletiva, densidade institucional e a crítica ao novo regionalismo.",
+  "autores": [
+   "Marshall",
+   "Fernández (2004)",
+   "Gerolamo et al. (2008)"
+  ],
+  "pontos": [
+   "Economias externas marshallianas: mão de obra especializada, fornecedores especializados, circulação de conhecimento",
+   "Eficiência coletiva = economias externas + ação conjunta deliberada",
+   "Fernández: densidade institucional ≠ quantidade de organizações (exige instituições e cooperação efetiva)",
+   "Crítica ao novo regionalismo: não idealizar distritos bem-sucedidos nem presumir que o modelo se reproduz em qualquer lugar",
+   "Aglomerar ≠ cooperar; cooperar não garante distribuição equitativa dos ganhos",
+   "Pergunta central: qualidade das relações, da inovação, da governança e da captura local de valor"
+  ],
+  "cuidado": "“Cluster ≠ rede” e “densidade institucional ≠ número de instituições” estão na lista de confusões do guia.",
+  "modelo": "A afirmação confunde proximidade com cooperação. A aglomeração gera economias externas marshallianas, como mão de obra especializada, fornecedores especializados e circulação de conhecimento. Mas a eficiência coletiva exige, além delas, ação conjunta deliberada. Fernández acrescenta que a densidade institucional não equivale à quantidade de organizações: depende de instituições e de cooperação efetiva, formal ou informal, sustentada por confiança, normas e saber tácito. A crítica ao novo regionalismo reforça o ponto: não se devem idealizar os distritos bem-sucedidos nem presumir que o modelo se reproduz em qualquer lugar, pois história, heterogeneidade, concentração econômica e hierarquias importam. Aglomerar não é cooperar, e cooperar não garante distribuição equitativa dos ganhos. A pergunta relevante é, então, qual a qualidade das relações, da inovação, da governança e da captura local de valor."
+ },
+ {
+  "eixo": 9,
+  "tipo": "Relacione",
+  "min": 20,
+  "q": "Explique os quatro tipos de governança de cadeias globais (Humphrey e Schmitz) e relacione-os às possibilidades de upgrading de um fornecedor.",
+  "autores": [
+   "Schmitz (2004)",
+   "Humphrey e Schmitz",
+   "Fernández (2004)"
+  ],
+  "pontos": [
+   "Governança: como relações, parâmetros, padrões e acesso ao mercado são coordenados e controlados",
+   "Mercado, redes, quase-hierarquia (líder impõe exigências) e hierarquia (propriedade)",
+   "Upgrading: processo, produto, funcional e intersetorial",
+   "A inserção pode acelerar o aprendizado de processo e produto, via padrões e compradores",
+   "Pode restringir o upgrading funcional: líderes preservam design, marcas e mercados",
+   "Governança da cadeia ≠ governança territorial, embora se articulem"
+  ],
+  "cuidado": "O guia não atribui um tipo de upgrading a cada tipo de governança. Mostre a lógica: quem comanda a cadeia condiciona o que o fornecedor pode aprender.",
+  "modelo": "Governança de cadeia é a forma como relações, parâmetros, padrões e acesso ao mercado são coordenados e controlados. Humphrey e Schmitz distinguem mercado, redes, quase-hierarquia, em que a empresa líder impõe exigências a fornecedores dependentes, e hierarquia, baseada na propriedade. O upgrading pode ser de processo (eficiência e método), de produto (sofisticação e qualidade), funcional (novas funções, como design, marca e comercialização) ou intersetorial (aplicar competências a outra cadeia). A relação entre as duas ideias está em que a inserção em cadeias comandadas por compradores líderes pode acelerar o aprendizado de processo e de produto, por meio de padrões e exigências, mas pode restringir o upgrading funcional, porque os líderes preservam design, marcas e mercados. Logo, um fornecedor pode ficar mais eficiente e fabricar produtos mais sofisticados sem capturar as funções de maior valor. A governança da cadeia e a governança territorial são distintas, embora se articulem."
+ },
+ {
+  "eixo": 9,
+  "tipo": "Relacione",
+  "min": 20,
+  "q": "A partir de Theis e Jacomossi (2008) e de Macedo (2011), explique por que a concentração de clusters e de PIB em poucos municípios não basta para afirmar que há desenvolvimento territorial.",
+  "autores": [
+   "Theis e Jacomossi (2008)",
+   "Macedo (2011)",
+   "Fernández (2004)"
+  ],
+  "pontos": [
+   "Santa Catarina: 57 de 293 municípios com clusters e 68,29% do PIB estadual no recorte",
+   "Municípios diversificados se destacam; especialização única aumenta a vulnerabilidade",
+   "Associações descritivas, e não prova de que clusters causam riqueza; PIB ≠ desenvolvimento social",
+   "Macedo: critica as abordagens administrativas (copiar casos) e as localistas (o local pode tudo)",
+   "Território como lócus de convergência de políticas, e não universo autossuficiente",
+   "Crescimento ≠ desenvolvimento: capacidades, inclusão, qualidade do trabalho, distribuição e sustentabilidade"
+  ],
+  "cuidado": "Use os números só se tiver segurança (57 de 293; 68,29%). Sem eles, escreva “poucos municípios concentram grande parte do PIB”. Não confunda com Theis (2003).",
+  "modelo": "Theis e Jacomossi (2008) mostram que, em Santa Catarina, 57 dos 293 municípios hospedavam clusters e concentravam 68,29% do PIB estadual no recorte utilizado. Destacam ainda que municípios diversificados tinham melhor desempenho, e que a especialização em um único cluster podia gerar vulnerabilidade. São, porém, associações descritivas, e não prova de que clusters causam riqueza, nem de que PIB equivale a desenvolvimento social. Macedo (2011) ajuda a interpretar: critica as abordagens administrativas, que copiam casos de sucesso, e as localistas, que supõem que o local pode tudo, e entende o território como lócus de convergência de políticas, e não como universo autossuficiente. Crescimento é aumento de produção e renda; desenvolvimento territorial supõe capacidades, inclusão, qualidade do trabalho, distribuição e sustentabilidade dos ganhos. Logo, a concentração de clusters e de PIB indica desigualdade espacial e potencial, mas não basta para afirmar desenvolvimento."
+ },
+ {
+  "eixo": 10,
+  "tipo": "Diferencie",
+  "min": 18,
+  "q": "Diferencie o modelo linear e o enfoque sistêmico da inovação e explique por que comprar máquinas modernas não equivale, por si só, a inovar.",
+  "autores": [
+   "Cassiolato e Lastres (2005)",
+   "Macedo (2011)"
+  ],
+  "pontos": [
+   "Linear: pesquisa básica → aplicada → desenvolvimento → produção → difusão; science push × demand pull",
+   "Sistêmico supera a oposição: processo não linear, cumulativo, interativo, localizado e institucionalmente condicionado",
+   "Aprendizado na firma e com clientes, fornecedores, universidades, finanças, governo e trabalhadores",
+   "Learning by doing, using e interacting vão além do P&D formal; conhecimento codificado × tácito",
+   "Inovar é incorporar produtos, processos e formas organizacionais, e não só inventar ou importar máquinas",
+   "Aquisição de tecnologia não substitui a construção de competências locais"
+  ],
+  "cuidado": "Sistema aberto ≠ sistema de inovação. Aqui o “sistema” é o conjunto de instituições, atores e relações que influenciam a produção, a difusão e o uso de conhecimentos.",
+  "modelo": "O modelo linear vê a inovação como sequência que vai da pesquisa básica à aplicada, ao desenvolvimento, à produção e à difusão, empurrada pela ciência (science push) ou puxada pela demanda (demand pull). O enfoque sistêmico supera essa oposição: a inovação é um processo não linear, cumulativo, interativo, localizado e condicionado institucionalmente, em que a firma aprende com clientes, fornecedores, universidades, sistema financeiro, governo e trabalhadores. Aprender fazendo, usando e interagindo vai além do P&D formal, e o conhecimento tácito depende de experiência e interação, e não apenas de registros. Por isso, comprar máquinas modernas não é inovar por si só: inovar é incorporar à prática novos produtos, processos e formas organizacionais, e a aquisição de tecnologia não substitui a construção de competências locais."
+ },
+ {
+  "eixo": 10,
+  "tipo": "Aplique",
+  "min": 25,
+  "q": "Aplique ao agronegócio da região Sul-Fronteira de MS (exemplo construído) uma análise que combine sistema aberto, inovação e retenção local de valor, e indique duas diretrizes de política.",
+  "autores": [
+   "Araújo (2009)",
+   "Cassiolato e Lastres (2005)",
+   "Fernández (2004)",
+   "Schmitz (2004)",
+   "Macedo (2011)"
+  ],
+  "pontos": [
+   "Sistema aberto: produtores, fornecedores, cooperativas, bancos, universidades, assistência técnica e compradores",
+   "Choques de clima, preços e crédito afetam entradas e saídas",
+   "Dependência externa limita a autonomia territorial",
+   "Inovação como processo sistêmico e interativo (não é só comprar tecnologia)",
+   "Cooperação, tecnologia, logística, qualificação, diversificação e governança ajudam a reter valor",
+   "Duas diretrizes integradas e multiescalares, adaptadas ao território, sem copiar modelos",
+   "Fórmula final: desenvolvimento não decorre automaticamente da eficiência da firma"
+  ],
+  "cuidado": "O caso é um exemplo construído no guia, e não conclusão dos autores. Apresente-o como aplicação e não atribua afirmações empíricas sobre a região a Cassiolato e Lastres, Fernández ou Macedo.",
+  "modelo": "Aplicando a teoria dos sistemas, o agronegócio da Sul-Fronteira pode ser visto como um sistema aberto: produtores, fornecedores, cooperativas, bancos, universidades, assistência técnica e compradores se articulam, e choques de clima, de preços e de crédito afetam entradas e saídas. A dependência externa limita a autonomia territorial. No enfoque sistêmico de Cassiolato e Lastres, a inovação resulta de aprendizado interativo e cumulativo entre esses atores, e não apenas da compra de tecnologia. Com Fernández e Schmitz, a questão é quanto valor fica no território: cooperação, tecnologia, logística, qualificação, diversificação e governança ajudam a reter valor. Duas diretrizes decorrem daí: integrar educação, ciência, crédito e assistência técnica em políticas ajustadas às condições do território, sem copiar modelos externos; e estimular a diversificação e a cooperação entre os atores, para reduzir a vulnerabilidade a choques. Trata-se de uma aplicação construída, e não de conclusão dos autores. O desenvolvimento não decorre automaticamente da eficiência da firma: depende de como capacidades, conhecimento, poder e valor circulam e são apropriados no território."
+ }
+];
+  var EXAM_MIN = 120, EXAM_N = 4;
+  var GROUPS = [[1, 2, 3], [4, 5, 6], [7, 8], [9, 10]];
+  var STORE_KEY = 'dsp-dissertativo-v1';
+  var TOTAL = Q.length;
+  var byId = {};
+  Q.forEach(function (q, i) { q.id = 'd' + (i + 1); q.n = i + 1; byId[q.id] = q; });
+
+  /* ---------- armazenamento ---------- */
+  var canSave = true;
+  function loadSaved() {
+    try { var raw = localStorage.getItem(STORE_KEY); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+  }
+  var saved = loadSaved() || {};
+  function blank() { return { a: {}, c: {}, r: {} }; }
+  var study = saved.study || blank();
+  var exam = saved.exam || null;
+  var state = { eixo: 'all', tipo: 'all', mode: 'study' };
+  if (exam) state.mode = exam.ended ? 'review' : 'exam';
+
+  var saveTimer = null;
+  function saveNow() {
+    clearTimeout(saveTimer); saveTimer = null;
+    try { localStorage.setItem(STORE_KEY, JSON.stringify({ study: study, exam: exam })); }
+    catch (e) { if (canSave) { canSave = false; document.getElementById('save-note').hidden = false; } }
+  }
+  function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 400); }
+  window.addEventListener('beforeunload', function () { if (saveTimer) saveNow(); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden && saveTimer) saveNow(); });
+
+  function store() { return state.mode === 'study' ? study : exam; }
+
+  /* ---------- utilidades ---------- */
+  function el(tag, cls, html) { var n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function words(t) { var m = (t || '').trim().match(/\S+/g); return m ? m.length : 0; }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function mmss(sec) { sec = Math.max(0, Math.floor(sec)); return pad(Math.floor(sec / 60)) + ':' + pad(sec % 60); }
+  function hmmss(sec) { sec = Math.max(0, Math.floor(sec)); return Math.floor(sec / 3600) + ':' + pad(Math.floor(sec % 3600 / 60)) + ':' + pad(sec % 60); }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function scrollToEl(n) { n.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }
+
+  function checksOf(st, q) {
+    var c = st.c[q.id];
+    if (!c || c.length !== q.pontos.length) { c = q.pontos.map(function () { return false; }); st.c[q.id] = c; }
+    return c;
+  }
+  function scoreOf(st, q) { return checksOf(st, q).filter(Boolean).length; }
+
+  /* ---------- guia de comandos ---------- */
+  (function () {
+    var ul = document.getElementById('kinds');
+    Object.keys(TIPOS).forEach(function (k) { ul.appendChild(el('li', '', '<b>' + esc(k) + '</b> ' + esc(TIPOS[k]))); });
+  })();
+
+  /* ---------- cronômetro por questão (modo treino) ---------- */
+  var tm = { id: null, t0: 0 };
+  var elapsed = {};
+  function tmSeconds(id) { return (elapsed[id] || 0) + (tm.id === id ? (Date.now() - tm.t0) / 1000 : 0); }
+  function paintTimer(id) {
+    var q = byId[id], card = document.getElementById('q-' + id);
+    if (!card) return;
+    var span = card.querySelector('.tm'), btn = card.querySelector('.btn-tm');
+    if (!span) return;
+    var s = tmSeconds(id);
+    span.textContent = s > 0 || tm.id === id ? mmss(s) + ' de ' + q.min + ' min' : '';
+    span.classList.toggle('over', s > q.min * 60);
+    btn.textContent = tm.id === id ? 'Pausar' : (s > 0 ? 'Retomar cronômetro' : 'Cronometrar');
+  }
+  function toggleTimer(id) {
+    var prev = tm.id;
+    if (prev) { elapsed[prev] = tmSeconds(prev); tm.id = null; }
+    if (prev !== id) { tm.id = id; tm.t0 = Date.now(); }
+    if (prev) paintTimer(prev);
+    paintTimer(id);
+  }
+
+  /* ---------- cartão ---------- */
+  var nudged = {};
+  function buildCard(q, st, mode) {
+    var card = el('article', 'q');
+    card.id = 'q-' + q.id;
+    card.setAttribute('data-e', 'e' + q.eixo);
+    var meta = el('div', 'meta');
+    meta.appendChild(el('span', 'num', String(mode === 'study' ? q.n : q.pos)));
+    meta.appendChild(el('span', 'tag', 'Eixo ' + q.eixo + ' · ' + esc(EIXOS[q.eixo][0])));
+    if (mode === 'study' || mode === 'review') meta.appendChild(el('span', 'kind', esc(q.tipo)));
+    if (mode !== 'exam') meta.appendChild(el('span', 'sug', 'sugestão: ' + q.min + ' min'));
+    meta.appendChild(el('span', 'status', ''));
+    card.appendChild(meta);
+    card.appendChild(el('p', 'stmt', esc(q.q)));
+
+    if (mode === 'study') {
+      var d = el('details', 'help');
+      d.appendChild(el('summary', '', 'Dicas antes de escrever: comando e autores'));
+      d.appendChild(el('p', '', '<strong>' + esc(q.tipo) + '.</strong> ' + esc(TIPOS[q.tipo])));
+      d.appendChild(el('p', '', '<strong>Autores para mobilizar:</strong> ' + q.autores.map(esc).join(' · ')));
+      card.appendChild(d);
+    }
+
+    var lab = el('label', 'sr', 'Sua resposta à questão ' + (mode === 'study' ? q.n : q.pos));
+    lab.setAttribute('for', 'ta-' + q.id);
+    card.appendChild(lab);
+    var ta = el('textarea', 'resp');
+    ta.id = 'ta-' + q.id;
+    ta.placeholder = 'Escreva aqui, em 8 a 12 linhas. Comece pela tese.';
+    ta.value = st.a[q.id] || '';
+    ta.spellcheck = true;
+    if (mode === 'review') ta.readOnly = true;
+    card.appendChild(ta);
+
+    var tools = el('div', 'tools');
+    var count = el('span', 'count', '');
+    tools.appendChild(count);
+    if (mode === 'study') {
+      var t = el('span', 'tm', ''); tools.appendChild(t);
+    }
+    tools.appendChild(el('span', 'spacer'));
+    if (mode === 'study') {
+      var bt = el('button', 'btn btn-tm', 'Cronometrar'); bt.type = 'button';
+      bt.addEventListener('click', function () { toggleTimer(q.id); });
+      tools.appendChild(bt);
+      var br = el('button', 'btn primary btn-rev', 'Ver gabarito e corrigir'); br.type = 'button';
+      br.addEventListener('click', function () { reveal(q.id); });
+      tools.appendChild(br);
+    }
+    card.appendChild(tools);
+    var nudge = el('p', 'nudge', 'Tente escrever pelo menos algumas linhas antes de ver o gabarito: é a tentativa que fixa o conteúdo. Se quiser ver mesmo assim, clique de novo em “Ver gabarito e corrigir”.');
+    nudge.hidden = true; card.appendChild(nudge);
+
+    /* gabarito (construído uma vez, mostrado conforme o estado) */
+    var g = el('section', 'gab'); g.hidden = true;
+    g.appendChild(el('h3', '', 'Corrija a sua resposta'));
+    g.appendChild(el('p', 'hint', 'Marque o que a sua resposta cobriu, mesmo com outras palavras. Seja honesto: o que fica sem marca é o que você precisa revisar.'));
+    var ul = el('ul', 'pts');
+    q.pontos.forEach(function (p, i) {
+      var li = el('li'); var lb = el('label'); var cb = el('input'); cb.type = 'checkbox';
+      cb.checked = !!checksOf(st, q)[i];
+      lb.classList.toggle('on', cb.checked);
+      cb.addEventListener('change', function () {
+        checksOf(st, q)[i] = cb.checked; lb.classList.toggle('on', cb.checked); saveSoon(); paint(card, q, st, mode); updateStats();
+      });
+      lb.appendChild(cb); lb.appendChild(el('span', '', esc(p))); li.appendChild(lb); ul.appendChild(li);
+    });
+    g.appendChild(ul);
+    g.appendChild(el('p', 'score', ''));
+    g.appendChild(el('p', 'care', '<strong>Cuidado de prova.</strong> ' + esc(q.cuidado)));
+    var m = el('div', 'model');
+    m.appendChild(el('h4', '', 'Resposta-modelo'));
+    m.appendChild(el('p', '', esc(q.modelo)));
+    m.appendChild(el('p', 'small', words(q.modelo) + ' palavras · síntese autoral de estudo; compare a lógica, e não as palavras.'));
+    g.appendChild(m);
+    card.appendChild(g);
+
+    ta.addEventListener('input', function () {
+      st.a[q.id] = ta.value; paint(card, q, st, mode); saveSoon(); updateStats();
+    });
+    paint(card, q, st, mode);
+    return card;
+  }
+
+  function paint(card, q, st, mode) {
+    var ta = card.querySelector('textarea');
+    var n = words(ta.value);
+    var c = card.querySelector('.count');
+    c.className = 'count' + (n >= 110 && n <= 200 ? ' ok' : (n > 200 ? ' long' : ''));
+    c.textContent = n + (n === 1 ? ' palavra' : ' palavras') + (n === 0 ? ' · meta: 110 a 200' : (n < 110 ? ' · meta: 110 a 200' : (n <= 200 ? ' · dentro da meta' : ' · acima da meta: cuide do tempo')));
+    var revealed = mode === 'review' ? true : !!st.r[q.id];
+    var g = card.querySelector('.gab');
+    g.hidden = !revealed;
+    var status = card.querySelector('.status');
+    if (revealed) {
+      var s = scoreOf(st, q), tot = q.pontos.length, r = s / tot;
+      var sc = g.querySelector('.score');
+      sc.className = 'score ' + (r >= 0.84 ? 'good' : (r >= 0.5 ? 'mid' : 'low'));
+      sc.textContent = s + ' de ' + tot + ' pontos · ' + (r >= 0.84 ? 'resposta forte. Releia o modelo só para polir a conclusão.' : (r >= 0.5 ? 'no caminho. Reescreva incluindo os pontos que ficaram sem marca.' : 'releia o eixo ' + q.eixo + ' e refaça a resposta sem consultar.'));
+      status.className = 'status done'; status.textContent = 'Corrigida · ' + s + '/' + tot;
+      card.querySelector('.nudge').hidden = true;
+      var br = card.querySelector('.btn-rev'); if (br) br.hidden = true;
+      var bt = card.querySelector('.btn-tm'); if (bt) bt.hidden = true;
+    } else {
+      status.className = 'status' + (n > 0 ? ' draft' : '');
+      status.textContent = n > 0 ? 'Rascunho' : (mode === 'exam' ? 'A responder' : 'Em branco');
+    }
+  }
+
+  function reveal(id) {
+    var q = byId[id], card = document.getElementById('q-' + id);
+    var n = words(study.a[id]);
+    if (n < 15 && !nudged[id]) { nudged[id] = true; card.querySelector('.nudge').hidden = false; return; }
+    study.r[id] = true; saveNow();
+    if (tm.id === id) toggleTimer(id);
+    paint(card, q, study, 'study'); updateStats();
+    var g = card.querySelector('.gab');
+    g.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
+  }
+
+  /* ---------- lista ---------- */
+  function visibleQs() {
+    if (state.mode !== 'study') return exam.ids.map(function (id, i) { var q = byId[id]; q.pos = i + 1; return q; });
+    return Q.filter(function (q) {
+      return (state.eixo === 'all' || ('e' + q.eixo) === state.eixo) && (state.tipo === 'all' || q.tipo === state.tipo);
+    });
+  }
+
+  function render() {
+    var list = document.getElementById('list');
+    list.innerHTML = '';
+    var qs = visibleQs(), st = store(), frag = document.createDocumentFragment(), last = null;
+    var grouped = state.mode === 'study' && state.eixo === 'all' && state.tipo === 'all';
+    qs.forEach(function (q) {
+      if (grouped && q.eixo !== last) frag.appendChild(el('h2', 'group', esc(EIXOS[q.eixo][0]) + '<span>Eixo ' + q.eixo + '</span>'));
+      last = q.eixo;
+      frag.appendChild(buildCard(q, st, state.mode));
+    });
+    if (!qs.length) frag.appendChild(el('p', 'lead', 'Nenhuma questão com esta combinação de filtros.'));
+    list.appendChild(frag);
+    qs.forEach(function (q) { if (state.mode === 'study') paintTimer(q.id); });
+    document.getElementById('filters').hidden = state.mode !== 'study';
+    renderModebar(); updateStats(); renderFinal();
+  }
+
+  /* ---------- barra de estado e simulado ---------- */
+  function updateStats() {
+    var row = document.getElementById('stats-row'), fill = document.getElementById('bar-fill'), bar = document.getElementById('bar');
+    var st = store(), ids = state.mode === 'study' ? Q.map(function (q) { return q.id; }) : exam.ids;
+    var total = ids.length, done = 0, got = 0, pts = 0, written = 0;
+    ids.forEach(function (id) {
+      var q = byId[id]; if (words(st.a[id]) > 0) written++;
+      if (state.mode === 'review' || st.r[id]) { done++; got += scoreOf(st, q); pts += q.pontos.length; }
+    });
+    var pct = pts ? Math.round(got / pts * 100) : 0;
+    var html;
+    if (state.mode === 'exam') {
+      html = '<span class="clock" id="clock" aria-label="Tempo restante">' + hmmss((exam.endAt - Date.now()) / 1000) + '</span>' +
+             '<span>' + written + ' de ' + total + ' com resposta</span>' +
+             '<button type="button" class="btn push" id="btn-submit">Entregar prova</button>';
+      fill.style.width = (written / total * 100) + '%';
+    } else if (state.mode === 'review') {
+      html = '<span>Simulado entregue</span><span>' + done + ' de ' + total + ' corrigidas</span><span>Aproveitamento: ' + pct + '%</span>';
+      fill.style.width = pct + '%';
+    } else {
+      html = '<span>' + done + ' de ' + total + ' corrigidas</span><span>' + written + ' com resposta</span>' + (done ? '<span>Aproveitamento nos pontos: ' + pct + '%</span>' : '');
+      fill.style.width = (done / total * 100) + '%';
+    }
+    row.innerHTML = html;
+    bar.setAttribute('aria-valuemax', String(total));
+    bar.setAttribute('aria-valuenow', String(state.mode === 'exam' ? written : done));
+    var sb = document.getElementById('btn-submit');
+    if (sb) sb.addEventListener('click', armedSubmit);
+    if (state.mode === 'review') renderFinal();
+  }
+
+  var submitArmed = false, submitTimer = null;
+  function armedSubmit() {
+    var b = document.getElementById('btn-submit');
+    if (!submitArmed) {
+      submitArmed = true; b.textContent = 'Confirmar entrega'; b.classList.add('primary');
+      submitTimer = setTimeout(function () { submitArmed = false; var x = document.getElementById('btn-submit'); if (x) { x.textContent = 'Entregar prova'; x.classList.remove('primary'); } }, 5000);
+    } else { clearTimeout(submitTimer); submitArmed = false; endExam(false); }
+  }
+
+  function renderModebar() {
+    var mb = document.getElementById('modebar'); mb.innerHTML = '';
+    if (state.mode === 'exam') {
+      var b = el('div', 'banner', '<strong>Simulado em andamento</strong><br>Quatro questões, duas horas, sem gabarito e sem dicas. Sugestão: cerca de 25 minutos por questão e 15 minutos finais de revisão (comandos respondidos, autores citados, conclusão com argumento). Se você recarregar a página, o tempo continua correndo e as respostas ficam salvas.');
+      mb.appendChild(b);
+    } else if (state.mode === 'review') {
+      var b2 = el('div', 'banner', '<strong>Simulado entregue</strong><br>Agora corrija cada resposta: marque os pontos que você cobriu e compare com a resposta-modelo.');
+      var row = el('div', 'row');
+      var back = el('button', 'btn', 'Voltar ao treino'); back.type = 'button'; back.addEventListener('click', leaveExam);
+      var again = el('button', 'btn primary', 'Novo simulado'); again.type = 'button'; again.addEventListener('click', startExam);
+      row.appendChild(back); row.appendChild(again); b2.appendChild(row); mb.appendChild(b2);
+    }
+    document.getElementById('btn-exam').disabled = state.mode === 'exam';
+  }
+
+  function renderFinal() {
+    var f = document.getElementById('final'); f.innerHTML = '';
+    if (state.mode !== 'review') return;
+    var got = 0, pts = 0, weak = [];
+    exam.ids.forEach(function (id) {
+      var q = byId[id], s = scoreOf(exam, q); got += s; pts += q.pontos.length;
+      if (s / q.pontos.length < 0.84) weak.push('Eixo ' + q.eixo + ' · ' + EIXOS[q.eixo][1]);
+    });
+    var h = el('section', 'final');
+    h.appendChild(el('h2', '', 'Balanço do simulado: ' + got + ' de ' + pts + ' pontos (' + Math.round(got / pts * 100) + '%)'));
+    h.appendChild(el('p', '', weak.length ? 'Revise primeiro: ' + weak.join('; ') + '. Depois refaça essas questões no modo treino.' : 'Todas as respostas ficaram fortes. Faça outro simulado para variar as questões.'));
+    f.appendChild(h);
+  }
+
+  var examTimer = null;
+  function startClock() {
+    clearInterval(examTimer);
+    examTimer = setInterval(function () {
+      if (state.mode === 'study' && tm.id) paintTimer(tm.id);
+      if (state.mode === 'exam') {
+        var left = (exam.endAt - Date.now()) / 1000;
+        var c = document.getElementById('clock');
+        if (c) { c.textContent = hmmss(left); c.classList.toggle('low', left <= 900); }
+        if (left <= 0) endExam(true);
+      }
+    }, 1000);
+  }
+
+  function pickExam() {
+    return GROUPS.map(function (g) {
+      var pool = Q.filter(function (q) { return g.indexOf(q.eixo) !== -1; });
+      return pool[Math.floor(Math.random() * pool.length)].id;
+    });
+  }
+  function startExam() {
+    if (tm.id) toggleTimer(tm.id);
+    exam = { ids: pickExam(), a: {}, c: {}, r: {}, endAt: Date.now() + EXAM_MIN * 60000, ended: false };
+    state.mode = 'exam'; saveNow(); render(); window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  }
+  function endExam(auto) {
+    if (!exam || exam.ended) return;
+    exam.ended = true; state.mode = 'review'; saveNow(); render();
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    if (auto) { var b = document.querySelector('#modebar .banner strong'); if (b) b.textContent = 'Tempo esgotado: simulado entregue automaticamente'; }
+  }
+  function leaveExam() { state.mode = 'study'; render(); window.scrollTo({ top: 0 }); }
+
+  /* ---------- exportar e apagar ---------- */
+  function exportText() {
+    var out = ['TREINO PARA A PROVA DISSERTATIVA · DINÂMICA DOS SISTEMAS PRODUTIVOS', 'Gerado em ' + new Date().toLocaleString('pt-BR'), ''];
+    function block(title, st, ids) {
+      var any = false, lines = ['==== ' + title + ' ===='];
+      ids.forEach(function (id) {
+        var q = byId[id], txt = (st.a[id] || '').trim();
+        if (!txt && !st.r[id]) return;
+        any = true;
+        lines.push('', 'Questão ' + q.n + ' · Eixo ' + q.eixo + ' (' + EIXOS[q.eixo][0] + ') · ' + q.tipo, q.q, '', 'MINHA RESPOSTA (' + words(txt) + ' palavras):', txt || '(em branco)');
+        if (st.r[id]) {
+          var c = checksOf(st, q), s = c.filter(Boolean).length;
+          lines.push('', 'AUTOAVALIAÇÃO: ' + s + ' de ' + q.pontos.length + ' pontos');
+          q.pontos.forEach(function (p, i) { lines.push((c[i] ? '  [x] ' : '  [ ] ') + p); });
+        }
+      });
+      return any ? lines.concat(['']) : [];
+    }
+    out = out.concat(block('TREINO', study, Q.map(function (q) { return q.id; })));
+    if (exam) out = out.concat(block(exam.ended ? 'SIMULADO ENTREGUE' : 'SIMULADO EM ANDAMENTO', exam, exam.ids));
+    if (out.length <= 3) out.push('Nenhuma resposta escrita ainda.');
+    var blob = new Blob([out.join('\n')], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'minhas-respostas-dsp.txt';
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  var clearArmed = false, clearTimer = null;
+  function clearAll() {
+    var b = document.getElementById('btn-clear');
+    if (!clearArmed) {
+      clearArmed = true; b.textContent = 'Tem certeza? Clique de novo'; b.classList.add('armed');
+      clearTimer = setTimeout(function () { clearArmed = false; b.textContent = 'Apagar minhas respostas'; b.classList.remove('armed'); }, 4000);
+      return;
+    }
+    clearTimeout(clearTimer); clearArmed = false; b.textContent = 'Apagar minhas respostas'; b.classList.remove('armed');
+    if (tm.id) toggleTimer(tm.id);
+    study = blank(); exam = null; elapsed = {}; nudged = {}; state.mode = 'study'; saveNow(); render();
+  }
+
+  /* ---------- eventos ---------- */
+  document.querySelectorAll('.chip').forEach(function (c) {
+    c.addEventListener('click', function () {
+      state[c.getAttribute('data-kind')] = c.getAttribute('data-filter');
+      document.querySelectorAll('.chip[data-kind="' + c.getAttribute('data-kind') + '"]').forEach(function (x) {
+        x.setAttribute('aria-pressed', x === c ? 'true' : 'false');
+      });
+      render();
+    });
+  });
+  document.getElementById('btn-exam').addEventListener('click', function () {
+    if (exam && !exam.ended) return;
+    startExam();
+  });
+  document.getElementById('btn-export').addEventListener('click', exportText);
+  document.getElementById('btn-clear').addEventListener('click', clearAll);
+
+  startClock();
+  if (state.mode === 'exam' && exam.endAt <= Date.now()) { exam.ended = true; state.mode = 'review'; saveNow(); }
+  render();
+})();
+</script>
+</body>
+</html>
